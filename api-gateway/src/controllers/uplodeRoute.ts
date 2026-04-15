@@ -12,7 +12,7 @@ export const uplodepdf = async (req, res) => {
     }
 
     // send to python
-    const fullpath = path.resolve(file.path)
+    const fullpath = path.resolve(file.path).replace(/\\/g, "/")
     const response = await axios.post(
       `${process.env.PYTHON_ENDPOINT}/process-pdf`,
       {
@@ -21,6 +21,8 @@ export const uplodepdf = async (req, res) => {
     );
 
     // get response
+    console.log("getting response from python", response.data);
+    
     return res.json(response.data);
   } catch (error) {
     return res.status(500).json({ message: "something want wrong", error });

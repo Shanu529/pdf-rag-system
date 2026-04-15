@@ -21,7 +21,12 @@ Client → Node → Python → Extract PDF text → Return text
 
 5. Generation
    LLM → Answer based on chunks 
-   
-   
+
+
+
+
+====> Extracted text → Split into chunks → Return chunks
+
+====> Chunks → Convert to embeddings → Store
    
 -->
