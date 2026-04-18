@@ -16,6 +16,7 @@ root/uploads/
 python-service/__pycache__/
 .venv/
 
+chroma_db
 
 # OS
 .DS_Store
