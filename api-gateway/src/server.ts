@@ -10,6 +10,7 @@ import cors from "cors";
 
 import uploadRoutes from "./routes/uploadRoutes.js";
 import queryRoutes from "./routes/queryRoutes.js";
+import generalRoutes from "./routes/generalQues.js";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.json());
 // clean routes
 app.use("/api/pdf", uploadRoutes);
 app.use("/api/query", queryRoutes);
+app.use("/api/general", generalRoutes);
 
 const PORT = 5000;
 

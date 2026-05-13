@@ -20,7 +20,7 @@ def store_embeddings(chunks:list, embeddings, doc_id:str):
     )
 
 
-def query_embeddings(query_embedding, doc_id: str, top_k: int = 3):
+def query_embeddings(query_embedding, doc_id: str, top_k: int = 5):
     """
     Retrieve top relevant chunks based on query
     """

@@ -12,11 +12,23 @@ clientGrok = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def generate_answer(question, context):
     prompt = f"""
-    You are a strict AI assistant.
+    You are a helpful AI assistant.
 
-    Answer ONLY from the provided context.
-    If the answer is not present, say:
+    Use the provided context to answer the question.
+
+    If the user asks for:
+    - summary
+    - explain this pdf
+    - what is this document about
+    - overview
+
+    Then summarize the context clearly.
+
+    Only say:
     "I don't know based on the document."
+
+    If the exact answer is not found, try to infer from the provided context.
+    Only say "I don't know based on the document" if absolutely no relevant information exists.
 
 
     Context:
@@ -39,3 +51,20 @@ def generate_answer(question, context):
 
 
     
+def general_answer(question):
+
+    response = clientGrok.chat.completions.create(
+        model="Llama-3.3-70B-Versatile",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a helpful AI assistant."
+            },
+            {
+                "role": "user",
+                "content": question
+            }
+        ]
+    )
+
+    return response.choices[0].message.content
