@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+
 import {
   Upload,
   FileText,
@@ -8,7 +9,10 @@ import {
 
 import axios from "axios";
 
+import { useNavigate }
+from "react-router-dom";
 
+import { isAuthenticated } from "../../shared/lib/isAuth"
 
 function formatBytes(bytes) {
 
@@ -28,8 +32,6 @@ function formatBytes(bytes) {
 
 }
 
-
-
 function FolderHeader({
   folder,
   addFiles,
@@ -37,65 +39,77 @@ function FolderHeader({
 
   const inputRef = useRef(null);
 
+  const navigate = useNavigate();
+
   const backend =
     import.meta.env.VITE_BACKEND_URL;
-  const handleUpload = async (files) => {
 
-    if (!files) return;
-    const file = files[0];
-    try {
 
-      const formData = new FormData();
+    const handleUpload = async (files) => {
 
-      formData.append("file", file);
+        // AUTH CHECK
+        const authcheck =
+          await isAuthenticated();
 
-     const response = await axios.post(
-        `${backend}/api/pdf`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+        if (!authcheck) {
+
+          navigate("/login");
+
+          return;
+
         }
-      );
 
+        if (!files) return;
 
+        const file = files[0];
 
-      console.log(
-        "PDF RESPONSE",
-        response.data
-      );
+        try {
 
+          const formData =
+            new FormData();
 
+          formData.append(
+            "file",
+            file
+          );
 
-      addFiles(
+          const response =
+            await axios.post(
+              `${backend}/api/pdf`,
+              formData,
+              {
+                headers: {
+                  "Content-Type":
+                    "multipart/form-data",
+                },
 
-        folder.id,
+                withCredentials: true,
+              }
+            );
 
-        [
-          {
-              id: Date.now(),
-              name: file.name,
-              size: file.size,
-              docId: response.data.doc_id,
-          }
-        ],
+          addFiles(
+            folder.id,
 
-        response.data.doc_id
+            [
+              {
+                id: Date.now(),
+                name: file.name,
+                size: file.size,
+                docId:
+                  response.data.doc_id,
+              },
+            ],
 
-      );
+            response.data.doc_id
+          );
 
+        } catch (error) {
 
+          console.log(error);
 
-    } catch (error) {
+        }
 
-      console.log(error);
-
-    }
-
-  };
-
-
+      };
 
   return (
 

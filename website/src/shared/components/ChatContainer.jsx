@@ -20,12 +20,12 @@ function ChatContainer() {
     setMessages((prev) => [...prev, userMsg]);
 
     setIsTyping(true);
-        console.log( "backend endpoint", `${backend_endpoint}/api/general`,);
+        console.log( "backend endpoint", `${backend_endpoint}/api/chat/general`,);
      
     try {
 
       const response = await axios.post(
-        `${backend_endpoint}/api/general`,
+        `${backend_endpoint}/api/chat/general`,
         {
           question: text,
         }

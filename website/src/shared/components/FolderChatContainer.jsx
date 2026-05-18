@@ -13,92 +13,6 @@ function FolderChatContainer({
   const backend = import.meta.env.VITE_BACKEND_URL;
 
 
-
-  // const sendMessage = async (text) => {
-
-  //   // 
-  //   const userMsg = {
-  //     id: Date.now(),
-  //     role: "user",
-  //     content: text,
-  //   };
-
-
-  //   setFolders((prev) =>
-  //     prev.map((folder) => {
-
-  //       if (folder.id === currentFolder.id) {
-
-  //         return {
-  //           ...folder,
-  //           messages: [...folder.messages, userMsg],
-  //         };
-
-  //       }
-
-  //       return folder;
-
-  //     })
-  //   );
-
-
-
-  //   setIsTyping(true);
-
-
-
-  //   try {
-
-  //     // API CALL
-  //     const response = await axios.post(
-  //       `${backend}/api/query`,
-  //       {
-  //         question: text,
-  //         doc_id: currentFolder.docId,
-  //       }
-  //     );
-
-
-
-  //     const llmMsg = {
-  //       id: Date.now() + 1,
-  //       role: "assistant",
-  //       content: response.data.answer,
-  //     };
-
-
-  //     setFolders((prev) =>
-  //       prev.map((folder) => {
-
-  //         if (folder.id === currentFolder.id) {
-
-  //           return {
-  //             ...folder,
-  //             messages: [...folder.messages, llmMsg],
-  //           };
-
-  //         }
-
-  //         return folder;
-
-  //       })
-  //     );
-
-  //   } catch (error) {
-
-  //     console.log(
-  //       "something went wrong at folder controller",
-  //       error
-  //     );
-
-  //   } finally {
-
-  //     setIsTyping(false);
-
-  //   }
-
-  // };
-
 const sendMessage = async (text) => {
 
   const userMsg = {
@@ -132,7 +46,7 @@ const sendMessage = async (text) => {
     console.log("DOC ID:", currentFolder.docId);
 
     const response = await axios.post(
-      `${backend}/api/query`,
+      `${backend}/api/chat/query`,
       {
         question: text,
         doc_id: currentFolder.docId,

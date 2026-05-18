@@ -5,36 +5,67 @@ import {
   Plus,
 } from "lucide-react";
 
+import { useNavigate }
+from "react-router-dom";
+
+import { isAuthenticated }
+from "../shared/lib/isAuth";
+
+
 function AppSidebar({
   folders = [],
   selection,
   select,
   createFolder,
+  deleteFolder,
 }) {
 
   const [open, setOpen] = useState(false);
 
   const [name, setName] = useState("");
 
+  const [menuFolder, setMenuFolder] = useState(null);
 
+  
+  const navigate = useNavigate();
 
-  const submit = () => {
+  const submit = async () => {
 
-    if (!name.trim()) return;
+      const authcheck =
+        await isAuthenticated();
 
-    createFolder(name);
+      if (!authcheck) {
 
-    setName("");
+        navigate("/login");
 
-    setOpen(false);
+        return;
 
-  };
+      }
 
+      if (!name.trim()) return;
 
+      createFolder(name);
+
+      setName("");
+
+      setOpen(false);
+
+    };
 
   return (
 
-    <div className="w-64 h-screen bg-gray-50 border-r flex flex-col justify-between">
+  <div
+  onClick={() => setMenuFolder(null)}
+  className="
+      hidden md:flex
+      w-64
+      h-screen
+      bg-gray-50
+      border-r
+      flex-col
+      justify-between
+      "
+      >
 
       <div className="p-4">
 
@@ -87,6 +118,7 @@ function AppSidebar({
 
 
           <button
+
             onClick={() => setOpen(true)}
           >
             <Plus size={14} />
@@ -125,52 +157,111 @@ function AppSidebar({
 
         {folders.map((f) => {
 
-          const active = selection?.kind === "folder" && selection?.id === f.id;
-          return (
-            <div
-              key={f.id}
-              onClick={() =>
-                select({
-                  kind: "folder",
-                  id: f.id,
-                })
-              }
-              className={`flex items-center gap-3 p-3 rounded-xl mb-2 cursor-pointer ${
-                active
-                  ? "bg-purple-100"
-                  : "hover:bg-gray-200"
-              }`}
-            >
+  const active =
+    selection?.kind === "folder" &&
+    selection?.id === f.id;
 
-              <div
-                className={`h-8 w-8 flex items-center justify-center rounded-lg ${
-                  active
-                    ? "bg-purple-500 text-white"
-                    : "bg-gray-300"
-                }`}
-              >
-                <Folder size={14} />
-              </div>
+  let pressTimer;
 
+  return (
 
+    <div
+      key={f.id}
 
-              <div>
+      onClick={() =>
+        select({
+          kind: "folder",
+          id: f.id,
+        })
+      }
 
-                <p className="text-sm font-medium">
-                  {f.name}
-                </p>
+      onContextMenu={(e) => {
 
-                <p className="text-xs text-gray-500">
-                  {f.files.length} PDFs
-                </p>
+        e.preventDefault();
 
-              </div>
+        setMenuFolder(f.id);
 
-            </div>
+      }}
 
-          );
+      onTouchStart={() => {
 
-        })}
+        pressTimer = setTimeout(() => {
+
+          setMenuFolder(f.id);
+
+        }, 700);
+
+      }}
+
+      onTouchEnd={() => {
+
+        clearTimeout(pressTimer);
+
+      }}
+
+      className={`relative flex items-center gap-3 p-3 rounded-xl mb-2 cursor-pointer ${
+        active
+          ? "bg-purple-100"
+          : "hover:bg-gray-200"
+      }`}
+    >
+
+      <div
+        className={`h-8 w-8 flex items-center justify-center rounded-lg ${
+          active
+            ? "bg-purple-500 text-white"
+            : "bg-gray-300"
+        }`}
+      >
+        <Folder size={14} />
+      </div>
+
+      <div>
+
+        <p className="text-sm font-medium">
+          {f.name}
+        </p>
+
+        <p className="text-xs text-gray-500">
+          {f.files.length} PDFs
+        </p>
+
+      </div>
+
+      {/* CONTEXT MENU */}
+      {menuFolder === f.id && (
+
+        <div
+          className="absolute right-2 top-12 bg-white border shadow-lg rounded-lg p-2 z-50"
+        >
+
+          <button
+
+            onClick={(e) => {
+
+              e.stopPropagation();
+
+              deleteFolder(f.id);
+
+              setMenuFolder(null);
+
+            }}
+
+            className="text-red-500 text-sm"
+
+          >
+            Delete Folder
+          </button>
+
+        </div>
+
+      )}
+
+    </div>
+
+  );
+
+})}
 
       </div>
 
