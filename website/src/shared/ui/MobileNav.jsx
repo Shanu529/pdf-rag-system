@@ -7,7 +7,10 @@ function MobileNav({ folders = [], selection, select }) {
   return (
     <>
       {/* HEADER */}
-      <header className="flex items-center justify-between border-b px-4 py-3 md:hidden">
+      <header className="
+      bg-[#02051e] text-white
+      flex items-center border-b-[#0B21BF]
+      justify-between border-b px-4 py-3 md:hidden">
         <button
           onClick={() => setOpen(true)}
           className="rounded-lg p-2 hover:bg-gray-200"
@@ -16,7 +19,7 @@ function MobileNav({ folders = [], selection, select }) {
         </button>
 
         <div className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-500">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0B21BF]">
             <Sparkles className="h-4 w-4 text-white" />
           </div>
           <span className="text-sm font-semibold">Nexus AI</span>
@@ -28,7 +31,9 @@ function MobileNav({ folders = [], selection, select }) {
       {/* SIDEBAR OVERLAY */}
       {open && (
         <div
-          className="fixed inset-0 z-50 md:hidden"
+          className="fixed
+          text-white
+          inset-0 z-50 md:hidden"
           onClick={() => setOpen(false)}
         >
           {/* Background */}
@@ -36,7 +41,7 @@ function MobileNav({ folders = [], selection, select }) {
 
           {/* Sidebar */}
           <aside
-            className="absolute left-0 top-0 h-full w-72 bg-white p-4 shadow-lg"
+            className="absolute left-0 top-0 h-full w-72 bg-[#02051e] p-4 shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
@@ -44,7 +49,7 @@ function MobileNav({ folders = [], selection, select }) {
               <span className="font-semibold">Workspaces</span>
               <button
                 onClick={() => setOpen(false)}
-                className="rounded-md p-1.5 hover:bg-gray-200"
+                className="rounded-md p-1.5 hover:bg-[#0B21BF]"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -58,8 +63,8 @@ function MobileNav({ folders = [], selection, select }) {
               }}
               className={`mt-4 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm ${
                 selection?.kind === "general"
-                  ? "bg-purple-500 text-white"
-                  : "hover:bg-gray-100"
+                  ? "bg-[#0B21BF] text-white"
+                  : "hover:bg-[#0B21BF]"
               }`}
             >
               <MessageSquare className="h-4 w-4" />
@@ -84,7 +89,7 @@ function MobileNav({ folders = [], selection, select }) {
                       setOpen(false);
                     }}
                     className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm ${
-                      active ? "bg-gray-200" : "hover:bg-gray-100"
+                      active ? "bg-[#0B21BF]" : "hover:bg-[#0B21BF]"
                     }`}
                   >
                     <FolderClosed className="h-4 w-4" />

@@ -51,7 +51,7 @@ def generate_answer(question, context):
 
 
     
-def general_answer(question):
+def general_answer(question, messages):
 
     response = clientGrok.chat.completions.create(
         model="Llama-3.3-70B-Versatile",
@@ -60,6 +60,7 @@ def general_answer(question):
                 "role": "system",
                 "content": "You are a helpful AI assistant."
             },
+            *messages,
             {
                 "role": "user",
                 "content": question

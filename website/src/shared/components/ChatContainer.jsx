@@ -28,6 +28,10 @@ function ChatContainer() {
         `${backend_endpoint}/api/chat/general`,
         {
           question: text,
+          messages : [
+            ...messages,
+            userMsg
+          ]
         }
       );
 
@@ -61,6 +65,7 @@ function ChatContainer() {
 
   return (
     <ChatView
+    
       mode="general"
       folderName="AI"
       messages={messages}

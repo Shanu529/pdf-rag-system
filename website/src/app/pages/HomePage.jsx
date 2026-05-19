@@ -15,7 +15,7 @@ function HomePage() {
 
     <Layout state={state}>
 
-      <ChatContainer />
+      <ChatContainer  />
 
     </Layout>
 

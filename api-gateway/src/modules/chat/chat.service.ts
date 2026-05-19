@@ -1,12 +1,13 @@
 import axios from "axios";
 
 export const generalQuestionService =
-  async (question: string) => {
+  async (question: string, messages:string[]) => {
 
     const response = await axios.post(
       `${process.env.PYTHON_ENDPOINT}/general-query`,
       {
         question,
+        messages,
       }
     );
 

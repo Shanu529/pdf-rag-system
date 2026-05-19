@@ -73,6 +73,10 @@ function FolderHeader({
             file
           );
 
+          formData.append(
+              "folderId",
+              folder.id
+            );
           const response =
             await axios.post(
               `${backend}/api/pdf`,
@@ -87,6 +91,8 @@ function FolderHeader({
               }
             );
 
+            console.log("pdf uplode.... response", response);
+            
           addFiles(
             folder.id,
 
@@ -113,30 +119,34 @@ function FolderHeader({
 
   return (
 
-    <div className="border-b bg-gradient-to-r from-blue-100 to-purple-100">
+    <div className="bg-[#02051e] border-1 border-b-[#0B21BF]">
 
       <div className="max-w-5xl mx-auto px-6 py-5">
 
         <div className="flex items-center justify-between">
 
           {/* LEFT */}
-          <div className="flex items-center gap-4">
+          <div className="flex bg-white px-2 py-2 rounded-lg items-center gap-4">
 
-            <div className="h-12 w-12 flex items-center justify-center rounded-xl bg-blue-500 text-white">
-              <FolderClosed size={20} />
+            <div className="md:h-12 h-8 w-8 md:w-12 flex items-center justify-center rounded-xl bg-blue-500 text-white">
+              <FolderClosed className="w-3 md:12" />
             </div>
 
 
 
             <div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center
+              
+               gap-2">
 
-                <h1 className="text-lg font-semibold">
+                <h1 className="text-lg text-[12px] text-blue font-semibold">
                   {folder.name}
                 </h1>
 
-                <span className="flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-white border text-blue-600">
+                <span className="md:flex hidden  items-center
+                text-[10px] md:text-xs
+                gap-1 text-xs px-2 py-1 rounded-full bg-white border text-blue-600">
 
                   <Lock size={12} />
 
@@ -167,7 +177,7 @@ function FolderHeader({
               inputRef.current.click()
             }
 
-            className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg text-sm shadow"
+            className="flex items-center gap-2 bg-[#0B21BF] text-white px-4 py-2 rounded-lg text-sm shadow"
 
           >
 

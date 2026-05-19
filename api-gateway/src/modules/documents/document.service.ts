@@ -31,7 +31,7 @@ export const uploadPDFService = async (file: any, folderId: string) => {
 
   return {
     message: "PDF uploaded successfully",
-
     document,
+    doc_id: docId
   };
 };

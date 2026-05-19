@@ -56,11 +56,13 @@ function AppSidebar({
 
   <div
   onClick={() => setMenuFolder(null)}
+  // color code
   className="
+      border-[#0B21BF]
       hidden md:flex
       w-64
       h-screen
-      bg-gray-50
+      bg-[#02051e]
       border-r
       flex-col
       justify-between
@@ -72,7 +74,7 @@ function AppSidebar({
       
         <div className="flex items-center gap-2 mb-6">
 
-          <div className="h-9 w-9 flex items-center justify-center rounded-lg bg-purple-500 text-white">
+          <div className="h-9 w-9 flex items-center justify-center rounded-lg bg-[#0B21BF] text-white">
             ✨
           </div>
 
@@ -92,10 +94,12 @@ function AppSidebar({
           onClick={() =>
             select({ kind: "general" })
           }
-          className={`flex items-center justify-between px-2 py-2 rounded-lg cursor-pointer mb-4 ${
+          className={`flex 
+            text-white
+            items-center justify-between px-2 py-2 rounded-lg cursor-pointer mb-4 ${
             selection?.kind === "general"
-              ? "bg-purple-100"
-              : "hover:bg-gray-200"
+              ? "bg-[#0B21BF]"
+              : "hover:bg-[#0B21BF]"
           }`}
         >
 
@@ -114,8 +118,6 @@ function AppSidebar({
           <span className="uppercase">
             Folders
           </span>
-
-
 
           <button
 
@@ -139,14 +141,16 @@ function AppSidebar({
                 setName(e.target.value)
               }
               placeholder="Folder name"
-              className="w-full border p-2 rounded text-sm"
+              className="w-full border
+              border-[#0B21BF]
+              text-white
+              p-2 rounded text-sm"
             />
-
 
 
             <button
               onClick={submit}
-              className="mt-2 w-full bg-purple-500 text-white py-2 rounded"
+              className="mt-2 w-full bg-[#0B21BF] text-white py-2 rounded"
             >
               Create Folder
             </button>
@@ -201,62 +205,64 @@ function AppSidebar({
 
       className={`relative flex items-center gap-3 p-3 rounded-xl mb-2 cursor-pointer ${
         active
-          ? "bg-purple-100"
-          : "hover:bg-gray-200"
+          ? "bg-[#0B21BF]"
+          : "hover:bg-[#0B21BF]"
       }`}
     >
 
-      <div
-        className={`h-8 w-8 flex items-center justify-center rounded-lg ${
-          active
-            ? "bg-purple-500 text-white"
-            : "bg-gray-300"
-        }`}
-      >
-        <Folder size={14} />
-      </div>
-
-      <div>
-
-        <p className="text-sm font-medium">
-          {f.name}
-        </p>
-
-        <p className="text-xs text-gray-500">
-          {f.files.length} PDFs
-        </p>
-
-      </div>
-
-      {/* CONTEXT MENU */}
-      {menuFolder === f.id && (
-
-        <div
-          className="absolute right-2 top-12 bg-white border shadow-lg rounded-lg p-2 z-50"
-        >
-
-          <button
-
-            onClick={(e) => {
-
-              e.stopPropagation();
-
-              deleteFolder(f.id);
-
-              setMenuFolder(null);
-
-            }}
-
-            className="text-red-500 text-sm"
-
+          <div
+            className={`h-8 w-8 flex items-center justify-center rounded-lg ${
+              active
+                ? "bg-black text-white"
+                : "bg-gray-300"
+            }`}
           >
-            Delete Folder
-          </button>
+            <Folder size={14} />
+          </div>
 
-        </div>
+          <div>
 
-      )}
+            <p className="text-sm text-white font-medium">
+              {f.name}
+            </p>
 
+            <p className="text-xs text-gray-400">
+              {f.files.length} PDFs
+            </p>
+
+          </div>
+
+          {/* CONTEXT MENU */}
+          {menuFolder === f.id && (
+
+            <div
+              className="absolute right-2 top-12 bg-white border shadow-lg rounded-lg p-2 z-50"
+            >
+
+              <button
+
+                onClick={(e) => {
+
+                  e.stopPropagation();
+
+                  deleteFolder(f.id);
+
+                  setMenuFolder(null);
+
+                }}
+
+                className="text-red-500 text-sm"
+
+              >
+                Delete Folder
+              </button>
+
+            </div>
+
+          )}
+
+
+        
     </div>
 
   );
@@ -265,6 +271,10 @@ function AppSidebar({
 
       </div>
 
+
+      <div className="bg-[#0B21BF] text-white py-4 m-2 rounded-lg px-5">
+      user name
+      </div>
     </div>
 
   );

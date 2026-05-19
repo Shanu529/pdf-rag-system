@@ -20,7 +20,7 @@ function LandingPage() {
           <div>
 
             <h1 className="font-bold">
-              Nexus AI
+              Nexus AI 
             </h1>
 
             <p className="text-xs text-gray-500">

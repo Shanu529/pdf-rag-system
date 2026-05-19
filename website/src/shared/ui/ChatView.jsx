@@ -42,7 +42,10 @@ function ChatView({
 
   return (
 
-  <div className="flex flex-col h-full w-full bg-gray-50 overflow-hidden">
+  <div className="flex 
+  flex-col h-full w-full 
+   bg-[#02051e]
+  overflow-hidden">
 
     {/* CHAT AREA */}
     {/* <div className="flex-1 overflow-y-auto px-4 py-4"> */}
@@ -89,7 +92,7 @@ function ChatView({
             <div
               className={`px-4 py-2 rounded-xl text-sm max-w-[80%] ${
                 msg.role === "user"
-                  ? "bg-blue-500 text-white"
+                  ? " bg-[#0B21BF] text-white"
                   : "bg-white border"
               }`}
             >
@@ -113,12 +116,15 @@ function ChatView({
     </div>
 
     {/* INPUT */}
-    <div className="border-t bg-white p-4">
+    <div className="border-t   bg-[#02051e] p-4">
 
       <div className="max-w-3xl mx-auto">
 
-        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2">
-
+        <div className="flex items-center
+        text-white gap-2 border-1 border-[#0B21BF]
+        placeholder:text-white
+        rounded-full px-4 py-2">
+          
           <input
             type="text"
             value={text}
@@ -136,7 +142,7 @@ function ChatView({
 
           <button
             onClick={handleSend}
-            className="bg-blue-500 text-white p-2 rounded-full"
+            className="bg-[#0B21BF] text-white p-2 rounded-full"
           >
             <Send size={16} />
           </button>

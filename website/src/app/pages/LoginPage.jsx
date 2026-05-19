@@ -66,7 +66,7 @@ function LoginPage() {
 
         <div className="text-center mb-8">
 
-          <div className="h-14 w-14 mx-auto rounded-2xl bg-purple-500 text-white flex items-center justify-center text-2xl">
+          <div className="h-14 w-14 mx-auto rounded-2xl bg-[#0B21BF] text-white flex items-center justify-center text-2xl">
             ✨
           </div>
 
@@ -106,7 +106,7 @@ function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-purple-500 hover:bg-purple-600 text-white rounded-xl py-3 font-medium"
+            className="w-full bg-[#0B21BF] hover:bg-[#3340a0] text-white rounded-xl py-3 font-medium"
           >
 
             {loading
@@ -123,7 +123,7 @@ function LoginPage() {
 
           <Link
             to="/signup"
-            className="text-purple-500 font-medium"
+            className="text-[#0B21BF] font-medium"
           >
             Signup
           </Link>

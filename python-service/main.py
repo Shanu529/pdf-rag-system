@@ -96,9 +96,10 @@ def query(data: dict):
 @app.post("/general-query")
 def general_query(data:dict):
     question  = data.get("question")
+    messages = data.get("messages",[])
 
     if not question:
         return {"error": "No Question provided"}
     
-    answer = general_answer(question)
+    answer = general_answer(question, messages)
     return {"Answer": answer}

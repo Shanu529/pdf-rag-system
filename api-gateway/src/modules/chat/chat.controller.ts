@@ -11,7 +11,7 @@ export const generalQues = async (
 
   try {
 
-    const { question } = req.body;
+    const { question, messages } = req.body;
 
     if (!question) {
       return res.status(400).json({
@@ -20,7 +20,7 @@ export const generalQues = async (
     }
 
     const data =
-      await generalQuestionService(question);
+      await generalQuestionService(question, messages);
 
     return res.json(data);
 
