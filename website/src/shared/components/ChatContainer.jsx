@@ -28,10 +28,11 @@ function ChatContainer() {
         `${backend_endpoint}/api/chat/general`,
         {
           question: text,
-          messages : [
-            ...messages,
-            userMsg
-          ]
+
+          messages : messages.map((msg)=>({
+            role : msg.role,
+            content:msg.content,
+          }))
         }
       );
 
