@@ -77,7 +77,8 @@ export function useWorkspaceState() {
           name,
         }
       );
-
+      console.log("response from api/folder",res);
+      
       const folder = res.data;
 
       const newFolder = {

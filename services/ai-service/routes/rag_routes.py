@@ -1,22 +1,33 @@
-import os
-from fastapi import FastAPI
-import uuid
-from dotenv import load_dotenv
-
-# import services 
-from services.pdf_service import extract_text_from_pdf
-from services.embedding_service import chunk_text, generate_embeddings
-from services.chroma_service import store_embeddings, query_embeddings
-from services.llm_service import generate_answer
-from services.embedding_service import rerank_chunks
-from services.llm_service import general_answer
-
-load_dotenv()
-
-app = FastAPI()
 
 # Endpoint: Process PDF -> store embeddings
-@app.post("/process-pdf")
+
+from fastapi import APIRouter
+
+from services.embedding_service import (
+    generate_embeddings,
+    rerank_chunks
+)
+
+from services.chroma_service import (
+    query_embeddings
+)
+
+from services.llm_service import (
+    generate_answer,
+    general_answer
+)
+
+from services.pdf_service import extract_text_from_pdf
+
+from services.embedding_service import chunk_text
+
+from services.chroma_service import store_embeddings
+
+import uuid
+
+router = APIRouter()
+
+@router.post("/process-pdf")
 def process_pdf(data: dict):
 
     file_path = data.get("filePath")
@@ -52,8 +63,10 @@ def process_pdf(data: dict):
         return {"error": str(e)}
 
 
+
+
 #  Endpoint: Query PDF → retrieve + generate answer
-@app.post("/query")
+@router.post("/query")
 def query(data: dict):
 
     question = data.get("question")
@@ -93,7 +106,7 @@ def query(data: dict):
 
 
 
-@app.post("/general-query")
+@router.post("/general-query")
 def general_query(data:dict):
     question  = data.get("question")
     messages = data.get("messages",[])
