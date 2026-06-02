@@ -5,13 +5,13 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 
-import chatRoutes from "./modules/chat/chat.routes.js";
+// import chatRoutes from "./modules/chat/chat.routes.js";
 
-import documentRoutes from "./modules/documents/document.routes.js";
+// import documentRoutes from "./modules/documents/document.routes.js";
 
-import folderRoutes from "./modules/folders/folder.routes.js";
+// import folderRoutes from "./modules/folders/folder.routes.js";
 
-import authRoutes from "./modules/auth/auth.routes.js";
+// import authRoutes from "./modules/auth/auth.routes.js";
 
 import { createProxyMiddleware } from "http-proxy-middleware";
 
@@ -46,7 +46,7 @@ app.use("/api/folders", createProxyMiddleware({
 }));
 
 app.use("/api/auth", createProxyMiddleware({
-  target: "http://localhost:5001", // change port to auth-service port
+  target: "http://localhost:5001", // auth-service port
   changeOrigin: true,
 }));
 

@@ -1,12 +1,14 @@
-
-
 import prisma from "../lib/prisma.js";
 import bcrypt from "bcryptjs";
 
 import jwt from "jsonwebtoken";
 
+import {
+  generateAccesToken,
+  generateRefreshToken,
+} from "../utils/generateTokens.js";
+
 export const signupService = async (
-  
   name: string,
   email: string,
   password: string,
@@ -50,20 +52,14 @@ export const loginService = async (email: string, password: string) => {
     throw new Error("Invalid credentials");
   }
 
-  // generate jwt
-  const token = jwt.sign(
-    {
-      userId: user.id,
-      email: user.email,
-    },
-    process.env.JWT_SECRET as string,
-    {
-      expiresIn: "7d",
-    },
-  );
+  // call acces token and refresh token
+
+  const accessToken = await generateAccesToken(user.id, user.email);
+
+  const refreshToken = await generateRefreshToken(user.id);
 
   return {
-    token,
-    user,
+    accessToken,
+    refreshToken,
   };
 };

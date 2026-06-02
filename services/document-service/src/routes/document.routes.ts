@@ -3,8 +3,8 @@ import multer from "multer";
 
 import {
   uploadPDF,
-} from "./document.controller.js";
-import authMiddleware from "../../middleware/auth.middleware.js";
+} from "../controllers/document.controller.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ const upload = multer({
 });
 
 router.post(
-  "/", authMiddleware,
+  "/upload", authMiddleware,
   upload.single("file"),
   uploadPDF
 );

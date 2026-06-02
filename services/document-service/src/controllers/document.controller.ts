@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { uploadPDFService } from "./document.service.js";
+import { uploadPDFService } from "../service/document.service.js";
 
 
 export const uploadPDF = async (

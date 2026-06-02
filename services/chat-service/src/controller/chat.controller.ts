@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import {
   askQuestionService,
   generalQuestionService,
-} from "./chat.service.js";
+} from "../service/chat.service.js";
 
 export const generalQues = async (
   req: Request,

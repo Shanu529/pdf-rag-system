@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
 
-const authMiddleware = (req: any, res: any, next: any) => {
+const authMiddleware = (req :any, res :any, next :any) => {
   try {
     console.log("cookies:", req.cookies);
-    const token = req.cookies.accessToken;
+
+    const token = req.cookies.token;
 
     console.log("token:", token);
 
@@ -25,7 +26,6 @@ const authMiddleware = (req: any, res: any, next: any) => {
     console.log("AUTH ERROR:", error);
 
     return res.status(401).json({
-      success: false,
       message: "Invalid token",
     });
   }

@@ -1,7 +1,7 @@
 import axios from "axios";
 import path from "path";
 
-import prisma from "../../lib/prisma.js";
+import prisma from "../lib/prisma.js";
 
 export const uploadPDFService = async (file: any, folderId: string) => {
   const fullpath = path.resolve(file.path).replace(/\\/g, "/");

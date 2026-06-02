@@ -1,10 +1,10 @@
-import prisma from "../../lib/prisma.js";
+import prisma from "../lib/prisma.ts";
 
 export const createFolderService = async (name: string, userId: string) => {
   const folder = await prisma.folder.create({
     data: {
       name,
-      userId, // replace with actual jwt user id
+      userId, // 
     },
   });
   return folder;

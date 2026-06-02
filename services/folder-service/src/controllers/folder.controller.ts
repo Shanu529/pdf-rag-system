@@ -1,7 +1,8 @@
-import express from "express";
 
-import { createFolderService, deleteFolderService, getAllFoldersService } from "./folder.service.js";
+
 import { Request, Response } from "express";
+import { createFolderService, deleteFolderService, getAllFoldersService } from "../services/folder.service.js";
+
 
 
 export const createFolder = async (
