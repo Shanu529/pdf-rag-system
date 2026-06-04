@@ -2,6 +2,7 @@
 
 import { Request, Response } from "express";
 import { createFolderService, deleteFolderService, getAllFoldersService } from "../services/folder.service.js";
+import prisma from "../lib/prisma.js";
 
 
 
@@ -76,3 +77,35 @@ export const getFolders =
     }
 
 };
+
+
+export const  verifyFolderOwner = async (req:any, res:any)=>{
+
+
+  try {
+    const { folderId } = req.params;
+
+    const folder = await prisma.folder.findUnique({
+      where:{
+        id:folderId
+      }
+    })
+
+    if(!folder){
+        return res.status(404).json({
+        success: false,
+        message: "Folder not found",
+      });
+    }
+
+    return res.json({
+      success: true,
+      userId: folder.userId,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Error verifying folder",
+    });
+  }
+}

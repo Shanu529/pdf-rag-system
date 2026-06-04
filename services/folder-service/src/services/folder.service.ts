@@ -4,7 +4,7 @@ export const createFolderService = async (name: string, userId: string) => {
   const folder = await prisma.folder.create({
     data: {
       name,
-      userId, // 
+      userId, //
     },
   });
   return folder;
@@ -40,15 +40,8 @@ export const getAllFoldersService = async (userId: string) => {
     where: {
       userId,
     },
-
     orderBy: {
       createdAt: "desc",
-    },
-
-    include: {
-      documents: true,
-
-      messages: true,
     },
   });
 

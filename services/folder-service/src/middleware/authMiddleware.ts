@@ -4,7 +4,7 @@ const authMiddleware = (req :any, res :any, next :any) => {
   try {
     console.log("cookies:", req.cookies);
 
-    const token = req.cookies.token;
+    const token = req.cookies.accessToken;
 
     console.log("token:", token);
 

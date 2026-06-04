@@ -12,8 +12,19 @@ const upload = multer({
   dest: "uploads/",
 });
 
+// router.post(
+//   "/upload", authMiddleware,
+//   upload.single("file"),
+//   uploadPDF
+// );
+
 router.post(
-  "/upload", authMiddleware,
+  "/upload",
+  (req, res, next) => {
+    console.log("UPLOAD ROUTE HIT");
+    next();
+  },
+  authMiddleware,
   upload.single("file"),
   uploadPDF
 );

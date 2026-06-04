@@ -5,6 +5,7 @@ import { login, signup, refresh, me, logout} from "../controllers/auth.controlle
 
 import authMiddleware from "./../middleware/auth.middleware.js";
 
+
 const router = express.Router();
 
 router.post("/login", login);

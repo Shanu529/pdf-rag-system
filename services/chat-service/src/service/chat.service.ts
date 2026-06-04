@@ -19,6 +19,8 @@ export const askQuestionService = async (
     doc_id: string
   ) => {
 
+
+  console.log("PYTHON_ENDPOINT =", process.env.PYTHON_ENDPOINT);
     const response = await axios.post(
       `${process.env.PYTHON_ENDPOINT}/query`,
       {

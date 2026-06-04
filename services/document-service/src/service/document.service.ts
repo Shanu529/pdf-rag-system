@@ -6,6 +6,9 @@ import prisma from "../lib/prisma.js";
 export const uploadPDFService = async (file: any, folderId: string) => {
   const fullpath = path.resolve(file.path).replace(/\\/g, "/");
 
+
+  console.log("PYTHON_ENDPOINT:", process.env.PYTHON_ENDPOINT);
+  console.log("FOLDER_SERVICE_URL:", process.env.FOLDER_SERVICE_URL);
   // pyuthon sericese
   const response = await axios.post(
     `${process.env.PYTHON_ENDPOINT}/process-pdf`,

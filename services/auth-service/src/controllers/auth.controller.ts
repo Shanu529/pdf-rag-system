@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { signupService, loginService } from "../services/auth.service.js";
 import { generateAccesToken } from "../utils/generateTokens.js";
+
 // SIGNUP
 export const signup = async (req: Request, res: Response) => {
   try {
@@ -28,6 +29,8 @@ export const login = async (req: Request, res: Response) => {
     const { name, email, password } = req.body;
 
     const data = await loginService(email, password);
+    console.log("ACCESS TOKEN:", data.accessToken);
+    console.log("REFRESH TOKEN:", data.refreshToken);
 
     // cookie access token
     res.cookie("accessToken", data.accessToken, {
@@ -75,7 +78,8 @@ export const me = async (req: any, res: any) => {
 export const refresh = async (req: any, res: any) => {
   try {
     const refreshToken = req.cookies.refreshToken;
-
+    console.log("COOKIES:", req.cookies);
+    console.log("REFRESH TOKEN:", req.cookies.refreshToken);
     if (!refreshToken) {
       return res.status(401).json({
         success: false,
@@ -83,7 +87,10 @@ export const refresh = async (req: any, res: any) => {
       });
     }
 
-    const decoded :any= jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!);
+    const decoded: any = jwt.verify(
+      refreshToken,
+      process.env.JWT_REFRESH_SECRET!,
+    );
 
     if (!decoded) {
       return res.status(401).json({
@@ -92,7 +99,9 @@ export const refresh = async (req: any, res: any) => {
       });
     }
 
-    const accessToken = await generateAccesToken(decoded.userId, decoded.email);
+    console.log("DECODED:", decoded);
+
+    const accessToken = generateAccesToken(decoded.userId, decoded.email);
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
@@ -103,18 +112,17 @@ export const refresh = async (req: any, res: any) => {
     return res.json({
       success: true,
     });
-  } catch (error) {
+  } catch (error: any) {
+    console.log("REFRESH ERROR:", error);
+
     return res.status(401).json({
       message: "Invalid refresh token",
+      error: error.message,
     });
   }
 };
 
-export const logout = async (
-  req: any,
-  res: any
-) => {
-
+export const logout = async (req: any, res: any) => {
   res.clearCookie("accessToken");
 
   res.clearCookie("refreshToken");
@@ -123,5 +131,4 @@ export const logout = async (
     success: true,
     message: "Logged out",
   });
-
 };

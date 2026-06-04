@@ -54,9 +54,10 @@ export const loginService = async (email: string, password: string) => {
 
   // call acces token and refresh token
 
-  const accessToken = await generateAccesToken(user.id, user.email);
+  const accessToken =  generateAccesToken(user.id, user.email);
 
-  const refreshToken = await generateRefreshToken(user.id);
+  // const refreshToken = await generateRefreshToken(user.id);
+  const refreshToken = generateRefreshToken(user.id, user.email);
 
   return {
     accessToken,
