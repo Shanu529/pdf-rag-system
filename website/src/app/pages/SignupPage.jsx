@@ -33,7 +33,7 @@ function SignupPage() {
     try {
 
       setLoading(true);
-
+      
       await api.post(
         "/api/auth/signup",
         form

@@ -1,8 +1,17 @@
 import { Request, Response } from "express";
 import { uploadPDFService } from "../service/document.service.js";
 import axios from "axios";
+
+
 export const uploadPDF = async (req: any, res: Response) => {
   try {
+    console.log("STEP 4 CONTROLLER");
+
+    console.log("FILE =", req.file);
+
+    console.log("BODY =", req.body);
+    console.log("USER =", req.user);
+
     const file = req.file;
     const { folderId } = req.body;
 
@@ -15,12 +24,19 @@ export const uploadPDF = async (req: any, res: Response) => {
 
     console.log("FILE:", file);
     console.log("FOLDER ID:", folderId);
-
+    console.log(
+  "VERIFY URL =",
+  `${process.env.FOLDER_SERVICE_URL}/api/folders/verify/${folderId}`
+);
+    console.log("BEFORE VERIFY");
     const folderService = await axios.get(
       `${process.env.FOLDER_SERVICE_URL}/api/folders/verify/${folderId}`,
     );
+    console.log("AFTER VERIFY");
+
 
     console.log("FOLDER RESPONSE:", folderService.data);
+    console.log(folderService.data);
 
     const ownerId = folderService.data.userId;
     const currentUserId = req.user.userId;

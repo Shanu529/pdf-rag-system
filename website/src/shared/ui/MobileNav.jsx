@@ -1,18 +1,48 @@
 import React, { useState } from "react";
 import { Menu, X, Sparkles, MessageSquare, FolderClosed } from "lucide-react";
 
+import {
+  User,
+} from "lucide-react";
+
+import { useNavigate } from "react-router-dom";
 function MobileNav({ folders = [], selection, select }) {
+  const [menu, setMenu] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const navigate = useNavigate();
+const [name, setName] = useState("");
+  const submit  = async ()=>{
+    const authcheck =
+    await isAuthenticated();
+    
+    if (!authcheck) {
+    
+    navigate("/login");
+    
+    return;
+    
+    }
+
+    
+    if (!name.trim()) return;
+
+    createFolder(name);
+
+    setName("");
+
+    setOpen(false);
+  }
   return (
     <>
       {/* HEADER */}
       <header className="
+      
       bg-[#02051e] text-white
       flex items-center border-b-[#0B21BF]
       justify-between border-b px-4 py-3 md:hidden">
         <button
-          onClick={() => setOpen(true)}
+          onClick={() => setMenu(true)}
           className="rounded-lg p-2 hover:bg-gray-200"
         >
           <Menu className="h-5 w-5" />
@@ -20,35 +50,35 @@ function MobileNav({ folders = [], selection, select }) {
 
         <div className="flex items-center gap-2">
           <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0B21BF]">
-            <Sparkles className="h-4 w-4 text-white" />
+          ⌬
           </div>
-          <span className="text-sm font-semibold">Nexus AI</span>
+          <span className="text-sm font-semibold">ParaDox AI</span>
         </div>
 
         <div className="w-9" />
       </header>
 
       {/* SIDEBAR OVERLAY */}
-      {open && (
+      {menu && (
         <div
           className="fixed
           text-white
           inset-0 z-50 md:hidden"
-          onClick={() => setOpen(false)}
+          onClick={() => setMenu(false)}
         >
           {/* Background */}
           <div className="absolute inset-0 bg-black/40" />
 
           {/* Sidebar */}
-          <aside
-            className="absolute left-0 top-0 h-full w-72 bg-[#02051e] p-4 shadow-lg"
+         <aside
+            className="absolute left-0 top-0 h-full w-72 bg-[#02051e] p-4 shadow-lg flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
             <div className="flex items-center justify-between">
               <span className="font-semibold">Workspaces</span>
               <button
-                onClick={() => setOpen(false)}
+                onClick={() => setMenu(false)}
                 className="rounded-md p-1.5 hover:bg-[#0B21BF]"
               >
                 <X className="h-4 w-4" />
@@ -72,10 +102,46 @@ function MobileNav({ folders = [], selection, select }) {
             </button>
 
             {/* Folder Section */}
-            <div className="mt-4 px-2 text-xs font-semibold uppercase text-gray-500">
-              Folders
+            
+            <div className="mt-4 px-2
+            flex justify-between
+            text-xs font-semibold uppercase text-gray-500 text-center">
+              <p className="pt-4"> Folders</p>     <p onClick={(()=>setOpen(true))} className="text-3xl hover:cursor-pointer">+</p>
+              
             </div>
 
+                    
+                {/* MODAL */}
+                {open && (
+
+                  <div className="mb-4 px-2">
+
+                    <input
+                      value={name}
+                      onChange={(e) =>
+                        setName(e.target.value)
+                      }
+                      placeholder="Folder name"
+                      className="w-full border
+                      border-[#0B21BF]
+                      text-white
+                      p-2 rounded text-sm"
+                    />
+
+
+                    <button
+                      onClick={submit}
+                      className="mt-2 w-full bg-[#0B21BF] text-white py-2 rounded"
+                    >
+                      Create Folder
+                    </button>
+
+                  </div>
+
+                )}
+                
+
+            
             <div className="mt-2 space-y-1">
               {folders.map((f) => {
                 const active =
@@ -98,7 +164,21 @@ function MobileNav({ folders = [], selection, select }) {
                 );
               })}
             </div>
+
+          <div
+      
+            onClick={() =>navigate("/login")}
+            className="bg-[#0B21BF] mt-auto
+              flex gap-2 cursor-pointer
+              text-white py-4 m-2 rounded-lg px-5">
+            <User /> 
+            <p>
+            Profile
+            </p>
+          </div>
+
           </aside>
+          
         </div>
       )}
     </>

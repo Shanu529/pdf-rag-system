@@ -3,6 +3,11 @@ import axios from "axios";
 export const generalQuestionService =
   async (question: string, messages:string[]) => {
 
+     console.log(
+      "PYTHON_ENDPOINT =",
+      process.env.PYTHON_ENDPOINT
+    );
+    console.log("Before AI call");
     const response = await axios.post(
       `${process.env.PYTHON_ENDPOINT}/general-query`,
       {
@@ -10,8 +15,9 @@ export const generalQuestionService =
         messages,
       }
     );
-
+    console.log("After AI call");
     return response.data;
+    
 };
 
 export const askQuestionService = async (
@@ -28,6 +34,6 @@ export const askQuestionService = async (
         doc_id,
       }
     );
-
+    console.log("Sending response to gateway");
     return response.data;
 };

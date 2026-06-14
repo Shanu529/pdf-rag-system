@@ -14,8 +14,10 @@ export function useWorkspaceState() {
       console.log("api folder hitting..");
       try {
 
+        console.log(`api get folders ${backend}`)
         const res = await api.get(
-          `${backend}/api/folders`
+          `${backend}/api/folders/getFolders`
+          // http://localhost:5000/api/folders/getFolders this is real endpoint tested by postmen
         );
 
         console.log("here is response folders form sever", res);
@@ -24,27 +26,25 @@ export function useWorkspaceState() {
           (folder) => ({
 
             id: folder.id,
-
             name: folder.name,
 
-            files: folder.documents.map(
+            files: (folder.documents || [] ).map(
               (doc) => ({
 
                 id: doc.id,
-
                 name: doc.fileName,
 
               })
             ),
 
-            messages: folder.messages,
+            messages: folder.messages || [],
 
             docId:
-              folder.documents[0]?.docId || null,
+              folder.documents?.[0]?.docId || null
 
           })
         );
-
+        console.log("dbFolders", dbFolders);
         setFolders(dbFolders);
 
       } catch (error) {
@@ -72,12 +72,12 @@ export function useWorkspaceState() {
     try {
 
       const res = await api.post(
-        `${backend}/api/folders`,
+        `${backend}/api/folders/create`,
         {
           name,
         }
       );
-      console.log("response from api/folder",res);
+      console.log("response from api/folder/create",res);
       
       const folder = res.data;
 
@@ -117,7 +117,7 @@ export function useWorkspaceState() {
     try {
 
       await api.delete(
-        `${backend}/api/folders/${id}`
+        `${backend}/api/folders/delete/${id}`
       );
 
       setFolders((prev) =>

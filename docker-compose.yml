@@ -1,0 +1,66 @@
+services:
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+    image: api-gateway
+    container_name: api-gateway
+    ports:
+      - "5000:5000"
+
+  auth-service:
+    build:
+      context: ./services/auth-service
+    image: auth-service
+    container_name: auth-service
+    ports:
+      - "5001:5001"
+
+  chat-service:
+    build:
+      context: ./services/chat-service
+    image: chat-service
+    container_name: chat-service
+    ports:
+      - "5002:5002"
+
+  folder-service:
+    build:
+      context: ./services/folder-service
+    image: folder-service
+    container_name: folder-service
+    ports:
+      - "5004:5004"
+
+  document-service:
+    build:
+      context: ./services/document-service
+    image: document-service
+    container_name: document-service
+    volumes:
+      - ./uploads:/app/uploads
+    env_file:
+    - ./services/document-service/.env
+    ports:
+      - "5003:5003"
+
+  ai-service:
+    build:
+      context: ./services/ai-service
+    image: ai-service
+    container_name: ai-service
+    volumes:
+      - ./uploads:/app/uploads
+    env_file:
+    - ./services/ai-service/.env
+    ports:
+    - "8000:8000"
+
+  
+  frontend:
+    build:
+      context: ./website
+    image: rag-pdf-frontend
+    container_name: frontend
+    ports:
+      - "5173:5173"

@@ -1,0 +1,11 @@
+venv
+__pycache__
+*.pyc
+
+chroma_db
+uploads
+
+.git
+.gitignore
+
+node_modules

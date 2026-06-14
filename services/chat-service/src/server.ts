@@ -7,6 +7,8 @@ import chatRoutes from "./routes/chat.routes.js";
 
 const app = express();
 
+app.use(express.json());
+
 dotenv.config();
 app.use(
   cors({
@@ -15,7 +17,12 @@ app.use(
   }),
 );
 
-app.use(express.json());
+app.use((req, res, next) => {
+  console.log("METHOD:", req.method);
+  console.log("URL:", req.url);
+  console.log("CONTENT-TYPE:", req.headers["content-type"]);
+  next();
+});
 
 // POST /api/chat/general
 // POST /api/chat/query

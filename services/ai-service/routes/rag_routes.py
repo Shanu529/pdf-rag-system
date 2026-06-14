@@ -114,5 +114,9 @@ def general_query(data:dict):
     if not question:
         return {"error": "No Question provided"}
     
+    print("QUESTION:", question)
+    print("MESSAGES:", messages)
+    print(type(messages))
+    
     answer = general_answer(question, messages)
     return {"Answer": answer}

@@ -20,12 +20,23 @@ const upload = multer({
 
 router.post(
   "/upload",
-  (req, res, next) => {
-    console.log("UPLOAD ROUTE HIT");
+   (req, res, next) => {
+    console.log("STEP 1 ROUTE");
     next();
   },
   authMiddleware,
+
+  (req, res, next) => {
+    console.log("STEP 2 AUTH PASSED");
+    next();
+  },
+
   upload.single("file"),
+   (req, res, next) => {
+    console.log("STEP 3 MULTER PASSED");
+    next();
+  },
+
   uploadPDF
 );
 

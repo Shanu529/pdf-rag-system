@@ -14,13 +14,13 @@ function LandingPage() {
         <div className="flex items-center gap-3">
 
           <div className="h-10 w-10 rounded-xl bg-purple-500 text-white flex items-center justify-center">
-            ✨
+           ⌬
           </div>
 
           <div>
 
             <h1 className="font-bold">
-              Nexus AI 
+              ParaDox AI 
             </h1>
 
             <p className="text-xs text-gray-500">

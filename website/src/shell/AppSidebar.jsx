@@ -3,7 +3,9 @@ import {
   MessageSquare,
   Folder,
   Plus,
+  User,
 } from "lucide-react";
+
 
 import { useNavigate }
 from "react-router-dom";
@@ -74,17 +76,17 @@ function AppSidebar({
       
         <div className="flex items-center gap-2 mb-6">
 
-          <div className="h-9 w-9 flex items-center justify-center rounded-lg bg-[#0B21BF] text-white">
-            ✨
+          <div className=" px-3 py-2 flex items-center justify-center rounded-lg bg-[#0B21BF] text-white">
+            ⌬
           </div>
 
-          <div>
-            <h1 className="text-sm font-semibold">
-              Nexus AI
+          <div className=" items-center ">
+            <h1 className="text-sm text-white font-semibold">
+              ParaDox AI
             </h1>
 
             <p className="text-xs text-gray-500">
-              Multi-AI workspace
+              Multi-AI workspacen
             </p>
           </div>
 
@@ -120,10 +122,11 @@ function AppSidebar({
           </span>
 
           <button
-
+            
             onClick={() => setOpen(true)}
           >
-            <Plus size={14} />
+            
+            <Plus size={14} className="" />
           </button>
 
         </div>
@@ -158,122 +161,130 @@ function AppSidebar({
           </div>
 
         )}
-
+        
         {folders.map((f) => {
 
-  const active =
-    selection?.kind === "folder" &&
-    selection?.id === f.id;
+        const active =
+          selection?.kind === "folder" &&
+          selection?.id === f.id;
 
-  let pressTimer;
+        let pressTimer;
 
-  return (
-
-    <div
-      key={f.id}
-
-      onClick={() =>
-        select({
-          kind: "folder",
-          id: f.id,
-        })
-      }
-
-      onContextMenu={(e) => {
-
-        e.preventDefault();
-
-        setMenuFolder(f.id);
-
-      }}
-
-      onTouchStart={() => {
-
-        pressTimer = setTimeout(() => {
-
-          setMenuFolder(f.id);
-
-        }, 700);
-
-      }}
-
-      onTouchEnd={() => {
-
-        clearTimeout(pressTimer);
-
-      }}
-
-      className={`relative flex items-center gap-3 p-3 rounded-xl mb-2 cursor-pointer ${
-        active
-          ? "bg-[#0B21BF]"
-          : "hover:bg-[#0B21BF]"
-      }`}
-    >
+        return (
 
           <div
-            className={`h-8 w-8 flex items-center justify-center rounded-lg ${
+            key={f.id}
+
+            onClick={() =>
+              select({
+                kind: "folder",
+                id: f.id,
+              })
+            }
+
+            onContextMenu={(e) => {
+
+              e.preventDefault();
+
+              setMenuFolder(f.id);
+
+            }}
+
+            onTouchStart={() => {
+
+              pressTimer = setTimeout(() => {
+
+                setMenuFolder(f.id);
+
+              }, 700);
+
+            }}
+
+            onTouchEnd={() => {
+
+              clearTimeout(pressTimer);
+
+            }}
+
+            className={`relative flex items-center gap-3 p-3 rounded-xl mb-2 cursor-pointer ${
               active
-                ? "bg-black text-white"
-                : "bg-gray-300"
+                ? "bg-[#0B21BF]"
+                : "hover:bg-[#0B21BF]"
             }`}
           >
-            <Folder size={14} />
+
+                <div
+                  className={`h-8 w-8 flex items-center justify-center rounded-lg ${
+                    active
+                      ? "bg-black text-white"
+                      : "bg-gray-300"
+                  }`}
+                >
+                  <Folder size={14} />
+                </div>
+
+                <div>
+
+                  <p className="text-sm text-white font-medium">
+                    {f.name}
+                  </p>
+
+                  <p className="text-xs text-gray-400">
+                    {f.files.length} PDFs
+                  </p>
+
+                </div>
+
+                {/* CONTEXT MENU */}
+                {menuFolder === f.id && (
+
+                  <div
+                    className="absolute right-2 top-12 bg-white border shadow-lg rounded-lg p-2 z-50"
+                  >
+
+                    <button
+
+                      onClick={(e) => {
+
+                        e.stopPropagation();
+
+                        deleteFolder(f.id);
+
+                        setMenuFolder(null);
+
+                      }}
+
+                      className="text-red-500 text-sm"
+
+                    >
+                      Delete Folder
+                    </button>
+
+                  </div>
+
+                )}
+
+
+              
           </div>
 
-          <div>
+        );
 
-            <p className="text-sm text-white font-medium">
-              {f.name}
-            </p>
-
-            <p className="text-xs text-gray-400">
-              {f.files.length} PDFs
-            </p>
-
-          </div>
-
-          {/* CONTEXT MENU */}
-          {menuFolder === f.id && (
-
-            <div
-              className="absolute right-2 top-12 bg-white border shadow-lg rounded-lg p-2 z-50"
-            >
-
-              <button
-
-                onClick={(e) => {
-
-                  e.stopPropagation();
-
-                  deleteFolder(f.id);
-
-                  setMenuFolder(null);
-
-                }}
-
-                className="text-red-500 text-sm"
-
-              >
-                Delete Folder
-              </button>
-
-            </div>
-
-          )}
-
-
-        
-    </div>
-
-  );
-
-})}
+      })}
 
       </div>
 
 
-      <div className="bg-[#0B21BF] text-white py-4 m-2 rounded-lg px-5">
-      user name
+      <div
+      
+      onClick={() =>navigate("/login")}
+      className="bg-[#0B21BF]
+      flex gap-2 cursor-pointer
+      text-white py-4 m-2 rounded-lg px-5">
+      <User /> 
+      <p>
+      Profile
+      </p>
       </div>
     </div>
 

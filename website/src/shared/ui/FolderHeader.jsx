@@ -60,8 +60,10 @@ function FolderHeader({
         }
 
         if (!files) return;
-
+        
         const file = files[0];
+         console.log("UPLOAD ROUTE HIT");
+        console.log(file);
 
         try {
 
@@ -77,9 +79,11 @@ function FolderHeader({
               "folderId",
               folder.id
             );
+            console.log("pdf uploding... with new endpoint")
           const response =
             await axios.post(
-              `${backend}/api/pdf`,
+              //  `${backend}/api/documents/upload`,
+              "http://localhost:5003/api/documents/upload",
               formData,
               {
                 headers: {
