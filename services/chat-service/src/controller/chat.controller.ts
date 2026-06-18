@@ -29,6 +29,7 @@ export const generalQues = async (req: Request, res: Response) => {
 };
 
 export const askQuestion = async (req: Request, res: Response) => {
+  console.log("ask Question BODY request=>>", req.body);
   try {
     const { question, doc_id } = req.body;
 

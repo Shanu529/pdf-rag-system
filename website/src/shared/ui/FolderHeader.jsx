@@ -35,6 +35,7 @@ function formatBytes(bytes) {
 function FolderHeader({
   folder,
   addFiles,
+  setFolders,
 }) {
 
   const inputRef = useRef(null);
@@ -94,9 +95,14 @@ function FolderHeader({
                 withCredentials: true,
               }
             );
-
+            console.log("FULL RESPONSE DATA", response.data);
+            console.log(
+              "DOCUMENT OBJECT",
+              response.data.document
+            );
             console.log("pdf uplode.... response", response);
-            
+            console.log("full response", response);
+            const docId = response.data.document.docId;
           addFiles(
             folder.id,
 
@@ -105,13 +111,50 @@ function FolderHeader({
                 id: Date.now(),
                 name: file.name,
                 size: file.size,
-                docId:
-                  response.data.doc_id,
+                docId,
+                status: "PROCESSING"
+                // docId: response.data.doc_id,
+                
               },
             ],
 
-            response.data.doc_id
+            docId
           );
+
+          setTimeout(async () => {
+            const docsRes = await axios.get(
+              `${backend}/api/documents/by-folder/${folder.id}`,
+              {
+                withCredentials: true,
+              }
+              );
+
+              const updatedFiles = docsRes.data.map((doc) => ({
+                id: doc.id,
+                name: doc.fileName,
+                docId: doc.docId,
+                status: doc.status,
+              }));
+
+                setFolders((prev) =>
+                  prev.map((f) =>
+                    f.id === folder.id
+                      ? {
+                          ...f,
+                          files: updatedFiles,
+                        }
+                      : f
+                  )
+                );
+
+  console.log("REFRESHED DOCS", docsRes.data);
+}, 5000);
+
+          console.log(
+            "DOC ID FROM UPLOAD:",
+            response.data.document.docId
+          );
+
 
         } catch (error) {
 

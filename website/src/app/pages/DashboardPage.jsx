@@ -34,6 +34,7 @@ function DashboardPage() {
               folder={currentFolder}
               addFiles={state.addFiles}
               removeFile={state.removeFile}
+              setFolders={state.setFolders}
             />
 
             <FolderChatContainer

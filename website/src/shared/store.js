@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import api from "./lib/axios";
+
+
+
+
 export function useWorkspaceState() {
   const [folders, setFolders] = useState([]);
 
@@ -21,29 +25,59 @@ export function useWorkspaceState() {
         );
 
         console.log("here is response folders form sever", res);
-        
-        const dbFolders = res.data.map(
-          (folder) => ({
 
-            id: folder.id,
-            name: folder.name,
+        const dbFolders = await Promise.all(
 
-            files: (folder.documents || [] ).map(
-              (doc) => ({
+          res.data.map(async (folder) => {
 
+            const docsRes = await api.get(
+              `${backend}/api/documents/by-folder/${folder.id}`,
+              {
+                withCredentials: true,
+              }
+            );
+
+            return {
+              id: folder.id,
+              name: folder.name,
+
+              files: docsRes.data.map((doc) => ({
                 id: doc.id,
                 name: doc.fileName,
+                docId: doc.docId,
+                status: doc.status,
+              })),
 
-              })
-            ),
-
-            messages: folder.messages || [],
-
-            docId:
-              folder.documents?.[0]?.docId || null
-
+              messages: [],
+              docId: docsRes.data[0]?.docId || null,
+            };
           })
+
         );
+
+        // const dbFolders = res.data.map(
+        //   (folder) => ({
+
+        //     id: folder.id,
+        //     name: folder.name,
+
+        //     files: (folder.documents || [] ).map(
+        //       (doc) => ({
+
+        //         id: doc.id,
+        //         name: doc.fileName,
+
+        //       })
+        //     ),
+
+        //     messages: folder.messages || [],
+
+        //     docId:
+        //       folder.documents?.[0]?.docId || null
+
+        //   })
+        // );
+
         console.log("dbFolders", dbFolders);
         setFolders(dbFolders);
 
@@ -77,8 +111,8 @@ export function useWorkspaceState() {
           name,
         }
       );
-      console.log("response from api/folder/create",res);
-      
+      console.log("response from api/folder/create", res);
+
       const folder = res.data;
 
       const newFolder = {

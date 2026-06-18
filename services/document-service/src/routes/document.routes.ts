@@ -1,43 +1,32 @@
 import express from "express";
 import multer from "multer";
 
-import {
-  uploadPDF,
-} from "../controllers/document.controller.js";
+import { uploadPDF } from "../controllers/document.controller.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
-
+import { getDocumentsByFolder } from "../controllers/document.controller.js";
+import prisma from "../lib/prisma.js";
 const router = express.Router();
-
+console.log("DOCUMENT ROUTES LOADED");
 const upload = multer({
   dest: "uploads/",
 });
 
-// router.post(
-//   "/upload", authMiddleware,
-//   upload.single("file"),
-//   uploadPDF
-// );
-
 router.post(
   "/upload",
-   (req, res, next) => {
-    console.log("STEP 1 ROUTE");
+  (req, res, next) => {
     next();
   },
   authMiddleware,
-
-  (req, res, next) => {
-    console.log("STEP 2 AUTH PASSED");
-    next();
-  },
-
   upload.single("file"),
-   (req, res, next) => {
-    console.log("STEP 3 MULTER PASSED");
-    next();
-  },
-
-  uploadPDF
+  uploadPDF,
 );
+
+router.get("/by-folder/:folderId", authMiddleware, getDocumentsByFolder);
+
+router.get("/all", async (req, res) => {
+  const docs = await prisma.document.findMany();
+
+  res.json(docs);
+});
 
 export default router;

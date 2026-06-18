@@ -51,11 +51,13 @@ services:
     container_name: ai-service
     volumes:
       - ./uploads:/app/uploads
+      - ./chroma_db:/app/chroma_db
     env_file:
     - ./services/ai-service/.env
     ports:
     - "8000:8000"
 
+# 9744562856
   
   frontend:
     build:
@@ -64,3 +66,19 @@ services:
     container_name: frontend
     ports:
       - "5173:5173"
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  worker:
+    build:
+      context: ./services/document-service
+    container_name: worker
+    env_file:
+    - ./services/document-service/.env
+    command: npm run worker
+    volumes:
+    - ./uploads:/app/uploads

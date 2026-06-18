@@ -35,6 +35,7 @@ export const deleteFolderService = async (id: string, userId: string) => {
   };
 };
 
+
 export const getAllFoldersService = async (userId: string) => {
   const folders = await prisma.folder.findMany({
     where: {

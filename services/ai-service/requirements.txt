@@ -17,3 +17,13 @@ python-dotenv
 groq
 
 numpy
+
+langchain
+
+langchain-community
+
+langchain-text-splitters
+
+langchain-huggingface
+
+langchain-groq
