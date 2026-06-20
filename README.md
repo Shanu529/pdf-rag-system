@@ -1,32 +1,71 @@
-# pdf-rag-system
-<!-- 
+# ParaDox AI
 
-Client → Node → Python → Extract PDF text → Return text 
+ParaDox AI is a microservices-based AI workspace that enables users to upload PDFs, organize them into folders, generate summaries, and chat with documents using Retrieval-Augmented Generation (RAG).
 
--->
+## Key Features
 
-<!-- 
+* PDF Upload & Processing
+* Folder-Based Document Management
+* AI-Powered PDF Chat
+* Document Summarization
+* Authentication with JWT (Access & Refresh Tokens)
+* Real-Time Notifications
+* Multi-PDF Knowledge Retrieval
+* Background Job Processing
 
-1. Ingestion
-   PDF → Text extraction
+## Architecture
 
-2. Processing
-   Text → Chunking → Embeddings
+* Frontend: React, Vite
+* API Gateway: Express.js
+* Backend Services: Node.js, TypeScript
+* AI Service: FastAPI, Sentence Transformers, Groq
+* Database: PostgreSQL + Prisma
+* Vector Database: ChromaDB
+* Queue System: Redis + BullMQ
+* Event Streaming: Kafka
+* Real-Time Communication: Socket.IO
+* Containerization: Docker & Docker Compose
 
-3. Storage
-   Store in Vector DB (FAISS)
+## System Flow
 
-4. Retrieval
-   Query → Similar chunks
+```text
+User
+  |
+  v
+Frontend (React)
+  |
+  v
+API Gateway
+  |
+  +--> Auth Service
+  +--> Folder Service
+  +--> Document Service
+  +--> Chat Service
+  |
+  v
+AI Service (FastAPI)
+  |
+  +--> ChromaDB
+  +--> Groq LLM
 
-5. Generation
-   LLM → Answer based on chunks 
+PDF Upload
+   |
+   v
+Redis Queue
+   |
+   v
+Worker
+   |
+   v
+AI Processing
+   |
+   v
+Kafka Event
+   |
+   v
+Notification Service
+   |
+   v
+Socket.IO → Frontend
+```
 
-
-
-
-====> Extracted text → Split into chunks → Return chunks
-
-====> Chunks → Convert to embeddings → Store
-   
--->
