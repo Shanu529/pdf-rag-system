@@ -20,6 +20,8 @@ model Document {
 
   folderId  String
 
+  summary   String?
+  
   status    String  @default("PROCESSING")
 
 }

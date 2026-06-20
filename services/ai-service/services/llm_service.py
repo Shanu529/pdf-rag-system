@@ -69,3 +69,27 @@ def general_answer(question, messages):
     )
 
     return response.choices[0].message.content
+
+
+def generate_summary(text):
+    prompt = f"""
+    You are a helpful AI assistant.
+    Summarize the following text in a clear and concise manner.
+    Summarize this document in 5-8 lines.
+
+    Document:
+    {text[:5000]}
+    """
+    response = clientGrok.chat.completions.create(
+        model="Llama-3.3-70B-Versatile",
+        messages=[
+            {"role":"system",
+             "content":"You are a document summarization assistant."
+            },
+            {
+                "role":"user",
+                "content":prompt
+            }
+        ]
+    )
+    return response.choices[0].message.content

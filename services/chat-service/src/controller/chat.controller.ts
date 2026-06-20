@@ -31,15 +31,15 @@ export const generalQues = async (req: Request, res: Response) => {
 export const askQuestion = async (req: Request, res: Response) => {
   console.log("ask Question BODY request=>>", req.body);
   try {
-    const { question, doc_id } = req.body;
+    const { question, folder_id } = req.body;
 
-    if (!question || !doc_id) {
+    if (!question || !folder_id) {
       return res.status(400).json({
         message: "Missing fields",
       });
     }
 
-    const data = await askQuestionService(question, doc_id);
+    const data = await askQuestionService(question, folder_id);
 
     return res.json(data);
   } catch (error: any) {

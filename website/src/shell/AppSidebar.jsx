@@ -7,6 +7,9 @@ import {
 } from "lucide-react";
 
 
+import NotificationBell from "../shared/components/NotificationBell";
+
+
 import { useNavigate }
 from "react-router-dom";
 
@@ -88,10 +91,11 @@ function AppSidebar({
             <p className="text-xs text-gray-500">
               Multi-AI workspacen
             </p>
+            
           </div>
-
+          <NotificationBell />
         </div>
-
+         
         <div
           onClick={() =>
             select({ kind: "general" })

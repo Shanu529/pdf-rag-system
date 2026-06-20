@@ -134,6 +134,7 @@ function FolderHeader({
                 name: doc.fileName,
                 docId: doc.docId,
                 status: doc.status,
+                summary: doc.summary,
               }));
 
                 setFolders((prev) =>
@@ -147,8 +148,8 @@ function FolderHeader({
                   )
                 );
 
-  console.log("REFRESHED DOCS", docsRes.data);
-}, 5000);
+                console.log("REFRESHED DOCS", docsRes.data);
+              }, 5000);
 
           console.log(
             "DOC ID FROM UPLOAD:",
@@ -289,7 +290,10 @@ function FolderHeader({
                   <p className="text-xs text-gray-500">
                     {formatBytes(file.size)}
                   </p>
-
+                  
+                  <button>
+                    View Summary
+                  </button>
                 </div>
 
               </div>

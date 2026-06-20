@@ -66,7 +66,6 @@ function ChatContainer() {
 
   return (
     <ChatView
-    
       mode="general"
       folderName="AI"
       messages={messages}

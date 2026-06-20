@@ -4,10 +4,12 @@ import { useWorkspaceState } from "../../shared/store";
 import ChatContainer from "../../shared/components/ChatContainer";
 import FolderChatContainer from "../../shared/components/FolderChatContainer";
 
+import { useState } from "react";
+
 function DashboardPage() {
 
   const state = useWorkspaceState();
-
+  const [pdfStatus, setPdfStatus] = useState("READY");
   const {
     selection,
     folders,

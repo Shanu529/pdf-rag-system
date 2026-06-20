@@ -5,6 +5,9 @@ import {
   User,
 } from "lucide-react";
 
+import NotificationBell from "../components/NotificationBell";
+
+
 import { useNavigate } from "react-router-dom";
 function MobileNav({ folders = [], selection, select }) {
   const [menu, setMenu] = useState(false);
@@ -54,7 +57,7 @@ const [name, setName] = useState("");
           </div>
           <span className="text-sm font-semibold">ParaDox AI</span>
         </div>
-
+         <NotificationBell />
         <div className="w-9" />
       </header>
 

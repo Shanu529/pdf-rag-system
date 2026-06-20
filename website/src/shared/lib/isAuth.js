@@ -1,7 +1,5 @@
 import axios from "axios";
-
-
-
+import api from "../lib/axios.js"
 
 export const isAuthenticated = async () => {
 
@@ -10,7 +8,7 @@ export const isAuthenticated = async () => {
         import.meta.env.VITE_BACKEND_URL;
 
     try {
-        await axios.get(`${backend}/api/auth/me`,
+        await api.get("/api/auth/me",
             {
                 withCredentials: true
             }

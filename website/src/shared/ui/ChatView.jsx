@@ -9,12 +9,15 @@ import {
   FolderClosed,
 } from "lucide-react";
 
+import PdfProcessingOverlay from "../components/PdfProcessingOverlay";
+
 function ChatView({
   mode,
   folderName,
   messages,
   sendMessage,
   isTyping,
+  folder,
 }) {
 
   const [text, setText] =
@@ -40,6 +43,10 @@ function ChatView({
 
   };
 
+  const processingPdf = folder?.files?.some(
+  (file) => file.status === "PROCESSING"
+);
+
   return (
 
   <div className="flex 
@@ -50,7 +57,12 @@ function ChatView({
     {/* CHAT AREA */}
     {/* <div className="flex-1 overflow-y-auto px-4 py-4"> */}
     <div className="flex-1 overflow-y-auto px-4 py-4 min-h-0">
+      
+      {processingPdf && (
+        <PdfProcessingOverlay />
+      )}
 
+        
       {/* EMPTY MESSAGE */}
       {messages.length === 0 && (
 
@@ -74,6 +86,7 @@ function ChatView({
         </div>
 
       )}
+
 
       {/* MESSAGES */}
       <div className="mt-6 space-y-4 max-w-3xl mx-auto">
@@ -127,6 +140,7 @@ function ChatView({
           
           <input
             type="text"
+            disabled={processingPdf}
             value={text}
             onChange={(e) =>
               setText(e.target.value)
@@ -136,12 +150,17 @@ function ChatView({
                 handleSend();
               }
             }}
-            placeholder="Ask something..."
+            placeholder={
+              processingPdf
+                ? "Wait until PDF is ready..."
+                : "Ask something..."
+            }
             className="flex-1 bg-transparent outline-none text-sm"
           />
 
           <button
-            onClick={handleSend}
+             disabled={processingPdf}
+              onClick={handleSend}
             className="bg-[#0B21BF] text-white p-2 rounded-full"
           >
             <Send size={16} />

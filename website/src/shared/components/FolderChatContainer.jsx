@@ -48,9 +48,10 @@ function FolderChatContainer({
       if (processingFile) {
         alert(`${processingFile.name} is still processing`);
         return;
-}
+    }
     setIsTyping(true);
 
+    console.log("hitting endpoint query before try block")
     try {
 
       console.log("DOC ID: currentFolder.docId", currentFolder.docId);
@@ -61,7 +62,8 @@ function FolderChatContainer({
         {
           question: text,
           // doc_id: currentFolder.docId,
-          doc_id: currentFolder.docId
+          // doc_id: currentFolder.docId
+          folder_id: currentFolder.id
         }
       );
 
@@ -92,7 +94,7 @@ function FolderChatContainer({
       );
 
     } catch (error) {
-
+      console.log("someting went wrong at query endpoint via frontend")
       console.log(error.response?.data);
 
     } finally {
@@ -108,6 +110,7 @@ function FolderChatContainer({
     <ChatView
       mode="folder"
       folderName={currentFolder.name}
+       folder={currentFolder}
       messages={currentFolder.messages}
       sendMessage={sendMessage}
       isTyping={isTyping}

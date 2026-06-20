@@ -22,7 +22,7 @@ export const generalQuestionService =
 
 export const askQuestionService = async (
     question: string,
-    doc_id: string
+    folder_id: string
   ) => {
 
 
@@ -31,7 +31,7 @@ export const askQuestionService = async (
       `${process.env.PYTHON_ENDPOINT}/query`,
       {
         question,
-        doc_id,
+        folder_id,
       }
     );
     console.log("Sending response to gateway");

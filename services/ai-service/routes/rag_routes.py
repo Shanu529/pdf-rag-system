@@ -14,7 +14,8 @@ from services.chroma_service import (
 
 from services.llm_service import (
     generate_answer,
-    general_answer
+    general_answer,
+    generate_summary
 )
 
 from services.pdf_service import extract_text_from_pdf
@@ -31,6 +32,9 @@ router = APIRouter()
 def process_pdf(data: dict):
 
     file_path = data.get("filePath")
+    folder_id = data.get("folderId")
+
+    print("FOLDER ID in ai-service:", folder_id)
 
     # validate input
     if not file_path:
@@ -41,6 +45,10 @@ def process_pdf(data: dict):
         text = extract_text_from_pdf(file_path)
 
         text = text.replace("\n"," ").strip()
+
+        # call summary function to generate summary of the document
+        summary = generate_summary(text)
+
         #  split text into chunks
         chunks = chunk_text(text)
 
@@ -51,12 +59,13 @@ def process_pdf(data: dict):
         doc_id = str(uuid.uuid4())
 
         #  store embeddings in vector DB
-        store_embeddings(chunks, embeddings, doc_id)
+        store_embeddings(chunks, embeddings, doc_id,folder_id)
 
         return {
             "message": "PDF processed successfully",
             "total_chunks": len(chunks),
-            "doc_id": doc_id
+            "doc_id": doc_id,
+            "summary": summary
         }
 
     except Exception as e:
@@ -71,12 +80,13 @@ def query(data: dict):
 
     question = data.get("question")
     selected_doc_id = data.get("doc_id")
-
+    folder_id = data.get("folder_id")
+    print("FOLDER ID: in ai-service ", folder_id)
     # validate inputs
     if not question:
         return {"error": "No question provided"}
 
-    if not selected_doc_id:
+    if not folder_id:
         return {"error": "No document ID provided"}
 
     try:
@@ -84,7 +94,7 @@ def query(data: dict):
         query_vector = generate_embeddings([question])
 
         #  retrieve relevant chunks from DB
-        results = query_embeddings(query_vector, selected_doc_id)
+        results = query_embeddings(query_vector,  folder_id)
 
 
         if not results:
